@@ -75,10 +75,10 @@
                 <h3>Book a Session</h3>
                 <p class="owner-email">contact.kj@gmail.com</p>
 
-                <form id="booking-form" onsubmit="event.preventDefault();">
-                    <input type="text" placeholder="Your Name" required>
-                    <input type="email" placeholder="Your Email" required>
-                    <textarea placeholder="What do you want to learn?" rows="1" required></textarea>
+                <form id="booking-form" action="https://formspree.io/f/xpqnjane" method="POST">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Your Email" required>
+                    <textarea name="message" placeholder="What do you want to learn?" rows="1" required></textarea>
                     <button type="submit" class="submit-btn">Send Message</button>
                 </form>
             </div>

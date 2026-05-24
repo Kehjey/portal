@@ -301,3 +301,27 @@ messageBox.addEventListener('input', function () {
     // 2. Set the height to match the exact physical height of the text inside it
     this.style.height = this.scrollHeight + 'px';
 });
+
+/* Replace your old form submission logic with this AJAX handler */
+const bookingForm = document.getElementById('booking-form');
+
+bookingForm.addEventListener('submit', async (e) => {
+    e.preventDefault(); // Stop page reload
+
+    const formData = new FormData(bookingForm);
+
+    // Send data to Formspree in the background
+    const response = await fetch(bookingForm.action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+    });
+
+    if (response.ok) {
+        alert('Thank you! Your session booking has been recorded.');
+        bookingForm.reset();
+        document.getElementById('modal-overlay').classList.remove('active'); // Close modal
+    } else {
+        alert('Oops! There was a problem submitting your form.');
+    }
+});
