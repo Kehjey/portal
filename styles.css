@@ -19,13 +19,23 @@ body.dark-mode {
     /* Faint white graph lines */
 }
 
-/* --- Graph Paper Theme --- */
-body.grid-theme {
-    /* Draws a 30x30 grid pattern using the transparent grid line variable */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Inter', sans-serif;
+    transition: background-color 0.5s ease, color 0.5s ease;
+
+    /* THE DEFAULT GRID PATTERN IS HERE */
     background-image:
         linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
         linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
     background-size: 30px 30px;
+}
+
+/* --- Plain Theme Override --- */
+body.plain-theme {
+    background-image: none;
+    /* Removes the grid when this class is active */
 }
 
 /* CSS Reset & Minimalist Base */
