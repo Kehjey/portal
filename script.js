@@ -160,23 +160,37 @@ updatePhysics();
 let clickStartX = 0;
 let clickStartY = 0;
 
-handle.addEventListener('mousedown', (e) => {
-    e.preventDefault();
+const getPointerPosition = (e) => {
+    if (e.touches && e.touches.length) {
+        return {
+            x: e.touches[0].clientX,
+            y: e.touches[0].clientY,
+        };
+    }
+    if (e.changedTouches && e.changedTouches.length) {
+        return {
+            x: e.changedTouches[0].clientX,
+            y: e.changedTouches[0].clientY,
+        };
+    }
+    return {
+        x: e.clientX,
+        y: e.clientY,
+    };
+};
+
+const beginDrag = (x, y) => {
     isDragging = true;
     hasToggled = false;
     vx = 0;
     vy = 0;
+    clickStartX = x;
+    clickStartY = y;
+};
 
-    // Record exactly where the mouse was pressed down
-    clickStartX = e.clientX;
-    clickStartY = e.clientY;
-});
-
-window.addEventListener('mousemove', (e) => {
-    if (!isDragging) return;
-
-    let targetX = e.clientX;
-    let targetY = e.clientY;
+const updateDrag = (x, y) => {
+    let targetX = x;
+    let targetY = y;
 
     const dx = targetX - startX;
     const dy = targetY - startY;
@@ -196,30 +210,58 @@ window.addEventListener('mousemove', (e) => {
     if (distance > toggleThreshold && !hasToggled) {
         document.body.classList.toggle('dark-mode');
         hasToggled = true;
-        // ADD THIS: Play the pull sound
-        pullSound.currentTime = 0; // Resets sound to the beginning
+        pullSound.currentTime = 0;
         pullSound.play();
     }
-});
+};
 
-window.addEventListener('mouseup', (e) => {
+const endDrag = (x, y) => {
     if (isDragging) {
-        // Calculate how far the mouse moved between pressing down and letting go
-        let moveX = e.clientX - clickStartX;
-        let moveY = e.clientY - clickStartY;
-        let dragDistance = Math.sqrt(moveX * moveX + moveY * moveY);
+        const moveX = x - clickStartX;
+        const moveY = y - clickStartY;
+        const dragDistance = Math.sqrt(moveX * moveX + moveY * moveY);
 
-        // If the mouse moved less than 5 pixels, it was a click, not a pull!
         if (dragDistance < 5) {
             document.body.classList.toggle('grid-theme');
-
-            clickSound.currentTime = 0; // Resets sound to the beginning
+            clickSound.currentTime = 0;
             clickSound.play();
         }
     }
 
     isDragging = false;
-});
+};
+
+const globalMoveHandler = (e) => {
+    if (!isDragging) return;
+    const { x, y } = getPointerPosition(e);
+    updateDrag(x, y);
+    if (e.cancelable) e.preventDefault();
+};
+
+const globalEndHandler = (e) => {
+    const { x, y } = getPointerPosition(e);
+    endDrag(x, y);
+};
+
+if (window.PointerEvent) {
+    handle.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        const { x, y } = getPointerPosition(e);
+        beginDrag(x, y);
+    });
+
+    window.addEventListener('pointermove', globalMoveHandler);
+    window.addEventListener('pointerup', globalEndHandler);
+} else {
+    handle.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        const { x, y } = getPointerPosition(e);
+        beginDrag(x, y);
+    });
+
+    window.addEventListener('mousemove', globalMoveHandler);
+    window.addEventListener('mouseup', globalEndHandler);
+}
 /* --- Modal Popup Logic --- */
 const modalOverlay = document.getElementById('modal-overlay');
 const openModalBtn = document.getElementById('open-modal-btn');
