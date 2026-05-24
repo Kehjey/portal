@@ -1,0 +1,420 @@
+/* --- CSS Variables for Dark Mode --- */
+:root {
+    --bg-color: #fafafa;
+    --text-color: #1a1a1a;
+    --text-secondary: #666;
+    --box-bg: #eaeaea;
+    --btn-hover: #444;
+    --grid-line: rgba(0, 0, 0, 0.05);
+    /* Light gray graph lines */
+}
+
+body.dark-mode {
+    --bg-color: #1a1a1a;
+    --text-color: #fafafa;
+    --text-secondary: #aaa;
+    --box-bg: #2a2a2a;
+    --btn-hover: #555;
+    --grid-line: rgba(255, 255, 255, 0.05);
+    /* Faint white graph lines */
+}
+
+/* --- Graph Paper Theme --- */
+body.grid-theme {
+    /* Draws a 30x30 grid pattern using the transparent grid line variable */
+    background-image:
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+
+/* CSS Reset & Minimalist Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body,
+html {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    scroll-behavior: smooth;
+    line-height: 1.6;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    /* Smooth fade on toggle */
+}
+
+/* --- Realistic Rope Styles --- */
+#rope-svg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    /* Let clicks pass through the invisible SVG box */
+    z-index: 999;
+}
+
+#cord-path {
+    stroke: var(--text-color);
+    transition: stroke 0.5s ease;
+}
+
+#handle {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--text-color);
+    transition: background-color 0.5s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: grab;
+    z-index: 1000;
+    /* Centers the visual ball exactly on the mathematical coordinates */
+    transform: translate(-50%, -50%);
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+#handle:active {
+    cursor: grabbing;
+}
+
+/* Layout Structure */
+section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* 1. Aesthetic Intro */
+.intro-text {
+    text-align: center;
+    animation: fadeIn 2s ease-in-out;
+}
+
+.intro-text h1 {
+    font-size: clamp(3rem, 5vw, 6rem);
+    font-weight: 300;
+    letter-spacing: -2px;
+    margin-bottom: 1rem;
+}
+
+.intro-text p {
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 3rem auto;
+}
+
+.scroll-indicator {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.scroll-indicator:hover {
+    color: var(--text-color);
+}
+
+.read-aloud {
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.read-aloud:hover {
+    opacity: 0.5;
+}
+
+/* 2. Demo Lesson Visuals */
+.demo-content {
+    width: 100%;
+}
+
+.demo-content h2 {
+    font-size: 2.5rem;
+    font-weight: 400;
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.demo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 4rem;
+}
+
+.demo-item {
+    text-align: left;
+}
+
+.video-placeholder {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background-color: var(--box-bg);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    transition: background-color 0.5s ease;
+}
+
+.demo-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.demo-item p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    transition: color 0.5s ease;
+}
+
+/* 3. Book a Lesson */
+.contact-content {
+    text-align: center;
+}
+
+.contact-content h2 {
+    font-size: 3rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+}
+
+.contact-content p {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
+}
+
+.mailto-btn {
+    display: inline-block;
+    padding: 1rem 3rem;
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    text-decoration: none;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+.mailto-btn:hover {
+    background-color: var(--btn-hover);
+    transform: translateY(-3px);
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Blurred Overlay --- */
+#modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 2000;
+    /* Above everything, including the rope */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+#modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* --- The Cloud Shape --- */
+#cloud-modal {
+    position: relative;
+    background-color: var(--box-bg);
+    width: 450px;
+    max-width: 90vw;
+    border-radius: 40px;
+    /* Pill shape */
+    padding: 40px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    /* Hidden by default, scaled up via JS class */
+    transform: scale(0);
+    transform-origin: center;
+    z-index: 1;
+}
+
+/* Cloud Bumps */
+#cloud-modal::before,
+#cloud-modal::after {
+    content: '';
+    position: absolute;
+    background-color: var(--box-bg);
+    border-radius: 50%;
+    z-index: -1;
+}
+
+#cloud-modal::before {
+    width: 180px;
+    height: 180px;
+    top: -60px;
+    left: 50px;
+}
+
+#cloud-modal::after {
+    width: 130px;
+    height: 130px;
+    top: -40px;
+    right: 60px;
+}
+
+/* --- Modal Content & Form --- */
+#modal-content {
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    /* Hidden initially for the animation */
+    text-align: center;
+}
+
+#close-modal-btn {
+    position: absolute;
+    top: -20px;
+    right: -10px;
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+#close-modal-btn:hover {
+    color: var(--text-color);
+}
+
+#modal-content h3 {
+    font-size: 2rem;
+    margin-bottom: 0.2rem;
+    font-weight: 500;
+}
+
+.owner-email {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    letter-spacing: 1px;
+}
+
+#booking-form input,
+#booking-form textarea {
+    width: 100%;
+    /* Changed padding to 10px 0 so the text is flush with the left edge of the border */
+    padding: 10px 0;
+    margin-bottom: 1.5rem;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--text-secondary);
+    color: var(--text-color);
+    font-family: inherit;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+/* Added a specific rule for the textarea to perfectly match the visual gap of the inputs */
+#booking-form textarea {
+    resize: none;
+    padding-top: 0;
+    margin-top: 0.5rem;
+    overflow: hidden;
+    /* <-- ADD THIS LINE to hide the scrollbar */
+    min-height: 35px;
+    /* Ensures it stays exactly 1 row high when empty */
+}
+
+#booking-form input:focus,
+#booking-form textarea:focus {
+    border-bottom-color: var(--text-color);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 50px;
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: var(--btn-hover);
+    transform: translateY(-2px);
+}
+
+/* --- Staged Animations --- */
+/* 1. The Cloud pops in */
+#modal-overlay.active #cloud-modal {
+    animation: popCloud 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* 2. The Text fades in AFTER the cloud is done (0.5s delay) */
+#modal-overlay.active #modal-content {
+    animation: fadeInText 0.5s ease forwards 0.5s;
+}
+
+@keyframes popCloud {
+    0% {
+        transform: scale(0);
+    }
+
+    80% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeInText {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
