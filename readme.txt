@@ -8,5 +8,5 @@ Files to be added:
 Things to be done:
     1. Add sound trigger for book a session display
     2. add material to process section
-    3. set up send a message (backend?)
+    3.
     
