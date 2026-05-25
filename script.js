@@ -222,9 +222,6 @@ const endDrag = (x, y) => {
         const dragDistance = Math.sqrt(moveX * moveX + moveY * moveY);
 
         if (dragDistance < 5) {
-            // CHANGE THIS LINE to toggle 'plain-theme'
-            document.body.classList.toggle('plain-theme');
-
             // Play the click sound
             clickSound.currentTime = 0;
             clickSound.play();

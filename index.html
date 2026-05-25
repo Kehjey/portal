@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="ShapeGrid.css">
 </head>
 
-<body class="dark-mode">
+<body class="dark-mode plain-theme">
     <svg id="rope-svg">
         <path id="cord-path" stroke-width="2" fill="none" stroke-linecap="round" />
     </svg>
@@ -87,6 +88,17 @@
 
     <audio id="click-sound" src="click.mp3" preload="auto"></audio>
     <audio id="pull-sound" src="pull.mp3" preload="auto"></audio>
+
+    <div id="shapegrid-root" style="position:fixed;inset:0;pointer-events:none;z-index:0;"></div>
+
+    <!-- React + Babel (for simple browser integration) -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- ShapeGrid component and app (transpiled in-browser) -->
+    <script type="text/babel" src="ShapeGrid.jsx"></script>
+    <script type="text/babel" src="app.jsx"></script>
 
     <script src="script.js"></script>
 </body>

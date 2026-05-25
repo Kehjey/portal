@@ -1,0 +1,19 @@
+/* ShapeGrid background canvas styles */
+.shapegrid-canvas {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: auto;
+    /* allow hover interactions on the canvas */
+    opacity: 0.35;
+    /* reduce overall opacity for a subtler background */
+}
+
+/* Ensure the root container doesn't block clicks on page elements */
+#shapegrid-root {
+    pointer-events: none;
+}
