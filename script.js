@@ -302,26 +302,36 @@ messageBox.addEventListener('input', function () {
     this.style.height = this.scrollHeight + 'px';
 });
 
-/* Replace your old form submission logic with this AJAX handler */
+/* ==========================================
+   4. GOOGLE SHEETS SUBMISSION HANDLING
+   ========================================== */
 const bookingForm = document.getElementById('booking-form');
 
 bookingForm.addEventListener('submit', async (e) => {
-    e.preventDefault(); // Stop page reload
+    e.preventDefault(); 
 
-    const formData = new FormData(bookingForm);
-
-    // Send data to Formspree in the background
-    const response = await fetch(bookingForm.action, {
-        method: 'POST',
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-    });
-
-    if (response.ok) {
-        alert('Thank you! Your session booking has been recorded.');
+    // Convert form data to URL encoded format for Google Apps Script compatibility
+    const formData = new URLSearchParams(new FormData(bookingForm));
+    
+    try {
+        // Send data directly to your Google Sheet
+        await fetch(bookingForm.action, {
+            method: 'POST',
+            body: formData,
+            mode: 'no-cors' // Bypasses browser CORS redirects smoothly
+        });
+        
+        // Since 'no-cors' hides the server response status, 
+        // we execute the success UI as soon as the fetch request fires successfully.
+        alert('Thank you! Your session booking has been recorded in my system.');
+        
+        // UI Clean up
         bookingForm.reset();
-        document.getElementById('modal-overlay').classList.remove('active'); // Close modal
-    } else {
-        alert('Oops! There was a problem submitting your form.');
+        const textarea = bookingForm.querySelector('textarea');
+        if (textarea) textarea.style.height = 'auto';
+        document.getElementById('modal-overlay').classList.remove('active'); 
+        
+    } catch (error) {
+        alert('Could not connect to the server. Please check your internet connection.');
     }
 });
