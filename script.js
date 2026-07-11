@@ -66,6 +66,47 @@ triggerZone.addEventListener('click', () => {
     playSequence(0);
 });
 
+document.querySelectorAll('[data-speech]').forEach((element) => {
+    element.addEventListener('click', () => {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(new SpeechSynthesisUtterance(element.dataset.speech));
+    });
+});
+
+/* --- Student Login Page Transition --- */
+const studentLoginLink = document.getElementById('student-login-link');
+const studentLoginForm = document.getElementById('student-login-form');
+
+const jumpToPageTop = () => {
+    const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 0);
+    document.documentElement.style.scrollBehavior = previousScrollBehavior;
+};
+
+const syncStudentView = () => {
+    const isStudentLogin = window.location.hash === '#student-login';
+    if (isStudentLogin) {
+        jumpToPageTop();
+    }
+    document.body.classList.toggle('student-view', isStudentLogin);
+};
+
+studentLoginLink.addEventListener('click', () => {
+    jumpToPageTop();
+    history.pushState(null, '', '#student-login');
+    syncStudentView();
+});
+
+window.addEventListener('hashchange', syncStudentView);
+window.addEventListener('popstate', syncStudentView);
+syncStudentView();
+
+studentLoginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+});
+
 /* --- Realistic Rope Physics & Dark Mode --- */
 const handle = document.getElementById('handle');
 const cordPath = document.getElementById('cord-path');

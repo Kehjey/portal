@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=21">
 </head>
 
 <body class="dark-mode">
@@ -14,57 +14,89 @@
     </svg>
     <div id="handle"></div>
 
-    <section id="intro">
-        <div class="intro-text">
-            <div id="audio-trigger-zone">
-                <h1><span class="read-aloud" data-audio="intro-1.mp3">Hi, I'm Kush.</span></h1>
-                <p>
-                    <span class="read-aloud" data-audio="intro-2.mp3">Welcome.</span>
-                    <span class="read-aloud" data-audio="intro-3.mp3">I study Mathematics.</span>
-                    <span class="read-aloud" data-audio="intro-4.mp3">Just exploring like yourself.</span>
-                </p>
-            </div>
-            <a href="#demo" class="scroll-indicator">↓ See how I teach</a>
-        </div>
-    </section>
-
-    <section id="demo">
-        <div class="demo-content">
-            <h2>The Process</h2>
-            <div class="demo-grid">
-
-                <div class="demo-item">
-                    <div class="video-placeholder">
-                        [ Visual / Video Snippet ]
+    <main id="page-track">
+        <div class="page-panel portal-page">
+            <section id="intro">
+                <div class="intro-text">
+                    <div id="audio-trigger-zone">
+                        <h1><span class="read-aloud" data-audio="intro-1.mp3">Hi, I'm Kush.</span></h1>
+                        <p>
+                            <span class="read-aloud" data-audio="intro-2.mp3">Welcome.</span>
+                            <span class="read-aloud" data-audio="intro-3.mp3">I study Mathematics.</span>
+                            <span class="read-aloud" data-audio="intro-4.mp3">Just exploring like yourself.</span>
+                        </p>
                     </div>
-                    <h3>Visual Breakdown</h3>
-                    <p>Understand the "why" behind the "how". Taking one step at a time, we will understand the very
-                        core of the subject.</p>
-                </div>
-
-                <div class="demo-item">
-                    <div class="video-placeholder">
-                        [ Text Notes / Board Screenshot ]
+                    <div class="intro-actions">
+                        <button id="student-login-link" class="student-link-btn" type="button">
+                            <span>Continue learning</span>
+                            <span>→</span>
+                        </button>
+                        <a href="#demo" class="scroll-indicator">
+                            <span>See how I teach</span>
+                            <span>↓</span>
+                        </a>
                     </div>
-                    <h3>Interactive Dialogue</h3>
-                    <p>Lessons are conversations, not lectures. We work through scenarios in real-time via shared
-                        digital boards.</p>
                 </div>
+            </section>
 
-            </div>
-        </div>
-        <div style="text-align: center; margin-top: 4rem;">
-            <a href="#contact" class="scroll-indicator">↓ Book a lesson</a>
-        </div>
-    </section>
+            <section id="demo">
+                <div class="demo-content">
+                    <h2>The Process</h2>
+                    <div class="demo-grid">
 
-    <section id="contact">
-        <div class="contact-content">
-            <h2>One Step Closer to Understanding.</h2>
-            <p>It’s about patterns, structure, imagination, and learning how to think.</p>
-            <button id="open-modal-btn" class="mailto-btn">Book a Lesson</button>
+                        <div class="demo-item">
+                            <div class="video-placeholder">
+                                [ Visual / Video Snippet ]
+                            </div>
+                            <h3>Visual Breakdown</h3>
+                            <p>Understand the "why" behind the "how". Taking one step at a time, we will understand the
+                                very
+                                core of the subject.</p>
+                        </div>
+
+                        <div class="demo-item">
+                            <div class="video-placeholder">
+                                [ Text Notes / Board Screenshot ]
+                            </div>
+                            <h3>Interactive Dialogue</h3>
+                            <p>Lessons are conversations, not lectures. We work through scenarios in real-time via
+                                shared
+                                digital boards.</p>
+                        </div>
+
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 4rem;">
+                    <a href="#contact" class="scroll-indicator">↓ Book a lesson</a>
+                </div>
+            </section>
+
+            <section id="contact">
+                <div class="contact-content">
+                    <h2>One Step Closer to Understanding.</h2>
+                    <p>It’s about patterns, structure, imagination, and learning how to think.</p>
+                    <button id="open-modal-btn" class="mailto-btn">Book a Lesson</button>
+                </div>
+            </section>
         </div>
-    </section>
+
+        <section id="student-login" class="page-panel login-page" aria-labelledby="student-login-title">
+            <form id="student-login-form" class="login-card">
+                <svg class="login-frame" viewBox="0 0 620 260" preserveAspectRatio="none" aria-hidden="true">
+                    <path class="frame-snake frame-snake-top" d="M0 90 V0 H620 V260 H0 V90" />
+                    <path class="frame-snake frame-snake-bottom" d="M410 260 H620 V0 H0 V260 H410" />
+                    <path class="frame-tick" d="M30 0 V7 M60 0 V7 M90 0 V7 M120 0 V7 M150 0 V7 M180 0 V7 M0 30 H7 M0 60 H7" />
+                    <path class="frame-tick" d="M440 260 V253 M470 260 V253 M500 260 V253 M530 260 V253 M560 260 V253 M590 260 V253 M620 200 H613 M620 230 H613" />
+                </svg>
+                <h2 id="student-login-title"><span class="read-aloud" data-speech="Login">Login..</span></h2>
+                <div class="login-fields">
+                    <input type="text" name="studentId" placeholder="StudentID" autocomplete="username" required>
+                    <input type="password" name="passkey" placeholder="Passkey" autocomplete="current-password" required>
+                </div>
+                <button type="submit" class="submit-btn">Verify</button>
+            </form>
+        </section>
+    </main>
 
 
 
@@ -90,7 +122,7 @@
     <audio id="click-sound" src="click.mp3" preload="auto"></audio>
     <audio id="pull-sound" src="pull.mp3" preload="auto"></audio>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=21"></script>
 </body>
 
 </html>
