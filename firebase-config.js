@@ -1,6 +1,6 @@
 // Replace these placeholders with your Firebase project config.
 const firebaseConfig = {
-  apiKey: "AIzaSyBC8o_3lyH8flzCYombHJz_jFYfS-CKFaY",
+  apiKey: "AIzaSyDqyFioGkd_TU6nGpcXK6lchwTw47EV11E",
   authDomain: "learnwithkj-6dd31.firebaseapp.com",
   projectId: "learnwithkj-6dd31",
   storageBucket: "learnwithkj-6dd31.firebasestorage.app",
