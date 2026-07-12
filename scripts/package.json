@@ -1,0 +1,8 @@
+{
+  "name": "portal-scripts",
+  "private": true,
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "firebase-admin": "^12.7.0"
+  }
+}

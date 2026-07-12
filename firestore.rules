@@ -1,0 +1,12 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /students/{studentId} {
+      // Allow students to read only their own profile document.
+      allow get: if request.auth != null && request.auth.uid == studentId;
+      allow list: if false;
+      allow write: if false;
+    }
+  }
+}

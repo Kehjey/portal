@@ -77,6 +77,12 @@ document.querySelectorAll('[data-speech]').forEach((element) => {
 /* --- Student Login Page Transition --- */
 const studentLoginLink = document.getElementById('student-login-link');
 const studentLoginForm = document.getElementById('student-login-form');
+const loginFormFields = document.getElementById('login-form-fields');
+const loginSuccess = document.getElementById('login-success');
+const loginError = document.getElementById('login-error');
+const loginSubmitBtn = document.getElementById('login-submit-btn');
+const studentNameEl = document.getElementById('student-name');
+const studentLogoutBtn = document.getElementById('student-logout-btn');
 
 const jumpToPageTop = () => {
     const previousScrollBehavior = document.documentElement.style.scrollBehavior;
@@ -103,9 +109,106 @@ window.addEventListener('hashchange', syncStudentView);
 window.addEventListener('popstate', syncStudentView);
 syncStudentView();
 
-studentLoginForm.addEventListener('submit', (e) => {
+const setLoginError = (message = '') => {
+    if (!message) {
+        loginError.hidden = true;
+        loginError.textContent = '';
+        return;
+    }
+
+    loginError.textContent = message;
+    loginError.hidden = false;
+};
+
+const showLoggedInState = (name) => {
+    studentNameEl.textContent = name;
+    loginFormFields.hidden = true;
+    loginSuccess.hidden = false;
+    setLoginError('');
+    document.body.classList.add('student-authenticated');
+};
+
+const showLoggedOutState = () => {
+    loginFormFields.hidden = false;
+    loginSuccess.hidden = true;
+    studentNameEl.textContent = '';
+    studentLoginForm.reset();
+    setLoginError('');
+    document.body.classList.remove('student-authenticated');
+};
+
+const isFirebaseConfigured = () => (
+    firebaseConfig
+    && firebaseConfig.apiKey
+    && firebaseConfig.apiKey !== 'YOUR_API_KEY'
+);
+
+let firestoreDb = null;
+let firebaseAuth = null;
+
+if (isFirebaseConfigured()) {
+    firebase.initializeApp(firebaseConfig);
+    firestoreDb = firebase.app().firestore('default');
+    firebaseAuth = firebase.auth();
+} else {
+    console.warn('Firebase is not configured. Copy firebase-config.example.js to firebase-config.js and add your project settings.');
+}
+
+studentLoginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    setLoginError('');
+
+    if (!isFirebaseConfigured() || !firestoreDb || !firebaseAuth) {
+        setLoginError('Login is not configured yet. Add your Firebase settings to firebase-config.js.');
+        return;
+    }
+
+    const studentId = studentLoginForm.studentId.value.trim();
+    const password = studentLoginForm.password.value;
+
+    if (!studentId || !password) {
+        setLoginError('Enter your Student ID and password.');
+        return;
+    }
+
+    loginSubmitBtn.disabled = true;
+    loginSubmitBtn.textContent = 'Verifying...';
+
+    try {
+        const email = `${studentId.toLowerCase()}@portal.local`;
+        await firebaseAuth.signInWithEmailAndPassword(email, password);
+    } catch (error) {
+        console.error('Login failed:', error);
+        if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+            setLoginError('Invalid Student ID or password.');
+        } else if (error.code === 'auth/user-disabled') {
+            setLoginError('This account is inactive.');
+        } else {
+            setLoginError('Could not sign in. Check your internet connection and try again.');
+        }
+    } finally {
+        loginSubmitBtn.disabled = false;
+        loginSubmitBtn.textContent = 'Verify';
+    }
 });
+
+studentLogoutBtn.addEventListener('click', () => {
+    if (firebaseAuth) {
+        firebaseAuth.signOut();
+    } else {
+        showLoggedOutState();
+    }
+});
+
+if (firebaseAuth) {
+    firebaseAuth.onAuthStateChanged((user) => {
+        if (user) {
+            showLoggedInState(user.displayName || user.uid);
+        } else {
+            showLoggedOutState();
+        }
+    });
+}
 
 /* --- Realistic Rope Physics & Dark Mode --- */
 const handle = document.getElementById('handle');

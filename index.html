@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal</title>
-    <link rel="stylesheet" href="styles.css?v=21">
+    <link rel="stylesheet" href="styles.css?v=22">
 </head>
 
 <body class="dark-mode">
@@ -89,11 +89,18 @@
                     <path class="frame-tick" d="M440 260 V253 M470 260 V253 M500 260 V253 M530 260 V253 M560 260 V253 M590 260 V253 M620 200 H613 M620 230 H613" />
                 </svg>
                 <h2 id="student-login-title"><span class="read-aloud" data-speech="Login">Login..</span></h2>
-                <div class="login-fields">
-                    <input type="text" name="studentId" placeholder="StudentID" autocomplete="username" required>
-                    <input type="password" name="passkey" placeholder="Passkey" autocomplete="current-password" required>
+                <p id="login-error" class="login-message login-error" hidden></p>
+                <div id="login-form-fields">
+                    <div class="login-fields">
+                        <input type="text" name="studentId" placeholder="StudentID" autocomplete="username" required>
+                        <input type="password" name="password" placeholder="Password" autocomplete="current-password" required>
+                    </div>
+                    <button type="submit" class="submit-btn" id="login-submit-btn">Verify</button>
                 </div>
-                <button type="submit" class="submit-btn">Verify</button>
+                <div id="login-success" class="login-success" hidden>
+                    <p class="login-welcome">Welcome back, <span id="student-name"></span>.</p>
+                    <button type="button" id="student-logout-btn" class="submit-btn">Logout</button>
+                </div>
             </form>
         </section>
     </main>
@@ -122,7 +129,11 @@
     <audio id="click-sound" src="click.mp3" preload="auto"></audio>
     <audio id="pull-sound" src="pull.mp3" preload="auto"></audio>
 
-    <script src="script.js?v=21"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.0.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/11.0.0/firebase-auth-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore-compat.js" defer></script>
+    <script src="firebase-config.js" defer></script>
+    <script src="script.js?v=23" defer></script>
 </body>
 
 </html>
