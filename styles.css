@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&display=swap');
+
 /* --- CSS Variables for Dark Mode --- */
 :root {
     --bg-color: #fafafa;
@@ -641,5 +643,733 @@ body.student-view .frame-tick {
     100% {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+/* ==========================================
+   5. STUDENT SPACE & CALENDAR STYLES
+   ========================================== */
+
+/* Adjust login-page panel when showing the dashboard */
+body.student-authenticated .login-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-y: auto;
+    padding: 2.5rem 1.5rem;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+    width: 100%;
+    max-width: 920px; /* decreased from 1100px */
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem; /* decreased spacing between header and calendar grid */
+    animation: fadeIn 0.8s ease-out;
+    margin: auto 0; /* Center vertically when height fits, allow scrolling when it overflows */
+}
+
+/* Dashboard Header */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+    border-bottom: none; /* removed the line */
+    padding-bottom: 0.2rem; /* decreased padding */
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.header-left {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+}
+
+.month-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.35rem);
+    font-weight: 300;
+    letter-spacing: -1px;
+    color: var(--text-color);
+    display: flex;
+    align-items: baseline;
+    gap: 0.65rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.month-title .month-name {
+    text-transform: uppercase;
+    font-weight: 400;
+}
+
+.month-title .year-val {
+    font-size: 0.55em; /* decreased year size! */
+    color: var(--text-secondary);
+    font-weight: 300;
+    letter-spacing: 0;
+}
+
+/* Month Selector Dropdown */
+.month-selector-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.month-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 150;
+    background-color: var(--box-bg);
+    border: 1px solid var(--grid-line);
+    border-radius: 14px;
+    padding: 0.75rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    display: none;
+    flex-direction: column;
+    gap: 0.65rem;
+    margin-top: 0.4rem;
+    width: 220px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    animation: slideDown 0.2s ease-out;
+}
+
+.month-selector-wrapper:hover .month-dropdown {
+    display: flex;
+}
+
+.year-selector {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--grid-line);
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.year-nav-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0 0.5rem;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.year-nav-btn:hover {
+    color: var(--text-color);
+    transform: scale(1.15);
+}
+
+.dropdown-year-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.months-grid-selector {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.35rem;
+}
+
+.month-select-btn {
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    padding: 0.45rem 0;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    text-align: center;
+}
+
+.month-select-btn:hover {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.month-select-btn.active {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    font-weight: 600;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: 0.95rem;
+}
+
+.student-welcome-text {
+    color: var(--text-secondary);
+}
+
+.student-welcome-text strong {
+    color: var(--text-color);
+    font-weight: 400;
+}
+
+.dashboard-logout-btn {
+    background: transparent;
+    border: 1px solid var(--text-secondary);
+    color: var(--text-secondary);
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.dashboard-logout-btn:hover {
+    border-color: var(--text-color);
+    color: var(--text-color);
+    background-color: rgba(var(--text-color), 0.05);
+}
+
+/* Calendar Grid Wrapper */
+.calendar-grid-wrapper {
+    width: 100%;
+    background-color: var(--bg-color);
+    border: 1px solid var(--grid-line);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Weekdays Grid */
+.weekdays-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: var(--box-bg);
+    border-bottom: 1px solid var(--grid-line);
+}
+
+.weekdays-grid div {
+    padding: 0.65rem 0; /* decreased from 0.85rem */
+    text-align: center;
+    font-size: 0.75rem; /* decreased from 0.78rem */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+/* Days Grid */
+.days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: var(--grid-line);
+    gap: 1px;
+}
+
+/* Calendar Day Box */
+.calendar-day {
+    background-color: var(--bg-color);
+    min-height: 85px; /* decreased from 110px */
+    padding: 0.5rem; /* decreased from 0.6rem */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* space-between to push events to top and date number to bottom */
+    align-items: stretch;
+    cursor: pointer;
+    transition: background-color 0.25s ease;
+}
+
+.calendar-day:hover {
+    background-color: var(--box-bg);
+}
+
+/* Day Number styling */
+.day-number-wrapper {
+    display: flex;
+    justify-content: flex-end; /* changed from flex-start to bottom right placement */
+    margin-top: 0.25rem;
+}
+
+.day-number {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--text-secondary);
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.calendar-day.today .day-number {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    border-radius: 50%;
+    font-weight: 500;
+}
+
+.calendar-day.other-month {
+    opacity: 0.3;
+}
+
+.calendar-day.other-month:hover {
+    opacity: 0.55;
+}
+
+/* Events Container in Day Box */
+.day-events {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex-grow: 1;
+}
+
+/* Individual Event Card */
+.calendar-event {
+    font-size: 0.72rem;
+    padding: 3px 6px;
+    border-radius: 4px;
+    background-color: var(--box-bg);
+    border-left: 2px solid var(--text-color);
+    color: var(--text-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.2;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.calendar-day:hover .calendar-event {
+    background-color: var(--bg-color);
+}
+
+.calendar-event:hover {
+    opacity: 0.85;
+    transform: translateX(2px);
+}
+
+.calendar-event.task {
+    border-left-color: var(--text-secondary);
+    color: var(--text-secondary);
+    background-color: transparent;
+    border-style: dashed;
+    border-width: 0 0 0 2px;
+}
+
+.calendar-event.task.completed {
+    text-decoration: line-through;
+    opacity: 0.45;
+}
+
+/* Event Dots for Mobile */
+.event-dots {
+    display: none;
+}
+
+/* --- Calendar Details Modal --- */
+.calendar-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeInModal 0.3s ease-out;
+}
+
+.calendar-modal-content {
+    background-color: var(--box-bg);
+    width: min(440px, 90vw);
+    border-radius: 28px;
+    padding: 2.2rem;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+    position: relative;
+    animation: scaleInModal 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1) forwards;
+}
+
+.calendar-close-btn {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.5rem;
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.2s;
+    line-height: 1;
+}
+
+.calendar-close-btn:hover {
+    color: var(--text-color);
+}
+
+.calendar-modal-header {
+    border-bottom: 1px solid var(--grid-line);
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.modal-day-name {
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+}
+
+.modal-date-title {
+    font-size: 1.75rem;
+    font-weight: 300;
+    color: var(--text-color);
+}
+
+.modal-events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-height: 250px;
+    overflow-y: auto;
+    margin-bottom: 1.5rem;
+    padding-right: 0.5rem;
+}
+
+/* Custom Scrollbar for Modal Event List */
+.modal-events-list::-webkit-scrollbar {
+    width: 4px;
+}
+.modal-events-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+.modal-events-list::-webkit-scrollbar-thumb {
+    background: var(--grid-line);
+    border-radius: 2px;
+}
+
+.no-events-text {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    font-style: italic;
+    text-align: center;
+    padding: 1.5rem 0;
+}
+
+/* Event List Card */
+.modal-event-item {
+    background-color: var(--bg-color);
+    border-left: 3px solid var(--text-color);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+.event-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.4rem;
+}
+
+.event-title {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--text-color);
+    margin-bottom: 0.4rem;
+}
+
+.event-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.8rem;
+    line-height: 1.4;
+}
+
+.board-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 1.1rem;
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.board-btn:hover {
+    background-color: var(--btn-hover);
+    transform: translateY(-1px);
+}
+
+/* Task Item */
+.modal-task-item {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.85rem;
+    background-color: var(--bg-color);
+    border-radius: 8px;
+    transition: opacity 0.2s ease;
+}
+
+.task-checkbox-wrapper {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.task-checkbox {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--text-secondary);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    background: transparent;
+}
+
+.task-checkbox.checked {
+    background-color: var(--text-color);
+    border-color: var(--text-color);
+}
+
+.task-checkbox.checked::after {
+    content: '✓';
+    color: var(--bg-color);
+    font-size: 0.72rem;
+    font-weight: bold;
+}
+
+.task-text-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.task-title {
+    font-size: 0.95rem;
+    color: var(--text-color);
+    transition: all 0.2s ease;
+}
+
+.task-time {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.task-text-content.completed .task-title {
+    text-decoration: line-through;
+    color: var(--text-secondary);
+}
+
+.task-delete-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 0 0.25rem;
+    transition: color 0.2s;
+}
+
+.task-delete-btn:hover {
+    color: #e74c3c;
+}
+
+/* Add Task Section */
+.add-task-section {
+    border-top: 1px solid var(--grid-line);
+    padding-top: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.add-task-toggle-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-align: left;
+    transition: color 0.2s;
+    width: fit-content;
+}
+
+.add-task-toggle-btn:hover {
+    color: var(--text-color);
+    text-decoration: underline;
+}
+
+.add-task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    animation: slideDown 0.3s ease-out;
+}
+
+.add-task-form input {
+    width: 100%;
+    padding: 8px 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1.5px solid var(--text-secondary);
+    color: var(--text-color);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.add-task-form input:focus {
+    border-bottom-color: var(--text-color);
+}
+
+#task-title,
+#task-time {
+    width: 180px;
+    max-width: 100%;
+}
+
+body.dark-mode .add-task-form input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.task-submit-btn {
+    padding: 0.5rem 1.25rem;
+    border-radius: 50px;
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    border: none;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.task-submit-btn:hover {
+    background-color: var(--btn-hover);
+}
+
+/* Animations for Modal */
+@keyframes fadeInModal {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleInModal {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Mobile Responsive Rules for Calendar --- */
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 0 0.5rem;
+        gap: 1.5rem;
+    }
+
+    body.student-authenticated .login-page {
+        padding: 1.5rem 0.5rem;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    .header-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .calendar-day {
+        min-height: 58px;
+        aspect-ratio: 1;
+        padding: 0.4rem;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .day-number-wrapper {
+        margin-bottom: 0;
+        justify-content: center;
+    }
+
+    .day-number {
+        font-size: 0.85rem;
+    }
+
+    /* Hide text event lists on mobile, replace with dots */
+    .calendar-event {
+        display: none;
+    }
+
+    .event-dots {
+        display: flex;
+        gap: 3px;
+        justify-content: center;
+        align-items: center;
+        margin-top: 4px;
+        height: 6px;
+    }
+
+    .event-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: var(--text-color);
+        display: block;
+    }
+
+    .event-dot.task {
+        background-color: var(--text-secondary);
+        border: 1px solid var(--text-secondary);
+    }
+
+    .event-dot.completed {
+        opacity: 0.3;
     }
 }

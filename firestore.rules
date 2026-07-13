@@ -7,6 +7,11 @@ service cloud.firestore {
       allow get: if request.auth != null && request.auth.uid == studentId;
       allow list: if false;
       allow write: if false;
+
+      // Allow students to read and write their own months/notes.
+      match /months/{monthId} {
+        allow read, write: if request.auth != null && request.auth.uid == studentId;
+      }
     }
   }
 }

@@ -102,10 +102,62 @@
                     <button type="button" id="student-logout-btn" class="submit-btn">Logout</button>
                 </div>
             </form>
+
+            <!-- Student Space Dashboard -->
+            <div id="student-dashboard" class="dashboard-container" style="display: none;">
+                <header class="dashboard-header">
+                    <div class="header-left">
+                        <div class="month-selector-wrapper">
+                            <h2 class="month-title" id="calendar-month-year">
+                                <span class="month-name">JULY</span>
+                                <span class="year-val">2026</span>
+                            </h2>
+                            <div class="month-dropdown" id="month-dropdown-menu">
+                                <div class="year-selector">
+                                    <button id="dropdown-prev-year-btn" class="year-nav-btn" type="button">‹</button>
+                                    <span id="dropdown-year-val" class="dropdown-year-title">2026</span>
+                                    <button id="dropdown-next-year-btn" class="year-nav-btn" type="button">›</button>
+                                </div>
+                                <div class="months-grid-selector" id="dropdown-months-grid">
+                                    <button class="month-select-btn" data-month="0" type="button">JAN</button>
+                                    <button class="month-select-btn" data-month="1" type="button">FEB</button>
+                                    <button class="month-select-btn" data-month="2" type="button">MAR</button>
+                                    <button class="month-select-btn" data-month="3" type="button">APR</button>
+                                    <button class="month-select-btn" data-month="4" type="button">MAY</button>
+                                    <button class="month-select-btn" data-month="5" type="button">JUN</button>
+                                    <button class="month-select-btn" data-month="6" type="button">JUL</button>
+                                    <button class="month-select-btn" data-month="7" type="button">AUG</button>
+                                    <button class="month-select-btn" data-month="8" type="button">SEP</button>
+                                    <button class="month-select-btn" data-month="9" type="button">OCT</button>
+                                    <button class="month-select-btn" data-month="10" type="button">NOV</button>
+                                    <button class="month-select-btn" data-month="11" type="button">DEC</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="header-right">
+                        <span class="student-welcome-text">Student: <strong id="dashboard-student-name"></strong></span>
+                        <button type="button" id="dashboard-logout-btn" class="dashboard-logout-btn">Logout</button>
+                    </div>
+                </header>
+
+                <div class="calendar-grid-wrapper">
+                    <div class="weekdays-grid">
+                        <div>Mon</div>
+                        <div>Tue</div>
+                        <div>Wed</div>
+                        <div>Thu</div>
+                        <div>Fri</div>
+                        <div>Sat</div>
+                        <div>Sun</div>
+                    </div>
+                    <div class="days-grid" id="calendar-days">
+                        <!-- Filled dynamically -->
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
-
-
 
     <div id="modal-overlay">
         <div id="cloud-modal">
@@ -121,6 +173,33 @@
                     <input type="email" name="email" placeholder="Your Email" required>
                     <textarea name="message" placeholder="What do you want to learn?" rows="1" required></textarea>
                     <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calendar Details Modal -->
+    <div id="calendar-modal" class="calendar-modal-overlay" style="display: none;">
+        <div class="calendar-modal-content">
+            <button id="close-calendar-modal-btn" class="calendar-close-btn" type="button">&times;</button>
+            <div class="calendar-modal-header">
+                <div id="calendar-modal-day-name" class="modal-day-name">Tuesday</div>
+                <h3 id="calendar-modal-date-title" class="modal-date-title">July 14, 2026</h3>
+            </div>
+            
+            <div id="calendar-modal-events-list" class="modal-events-list">
+                <!-- Dynamic events list -->
+            </div>
+            
+            <div class="add-task-section">
+                <button id="show-add-task-btn" class="add-task-toggle-btn" type="button">+ Add Note / Task</button>
+                
+                <form id="add-task-form" class="add-task-form" style="display: none;">
+                    <input type="text" id="task-title" placeholder="Title" required autocomplete="off">
+                    <div class="form-row">
+                        <input type="time" id="task-time" placeholder="Time" autocomplete="off">
+                        <button type="submit" class="task-submit-btn">Add</button>
+                    </div>
                 </form>
             </div>
         </div>
