@@ -36,7 +36,7 @@ initializeApp({
     credential: cert(require('./service-account.json')),
 });
 
-const db = getFirestore('default');
+const db = getFirestore();
 const auth = getAuth();
 
 async function addStudent() {

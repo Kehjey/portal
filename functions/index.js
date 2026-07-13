@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 
 initializeApp();
 
-const db = getFirestore('default');
+const db = getFirestore();
 const auth = getAuth();
 
 exports.loginStudent = onCall(async (request) => {

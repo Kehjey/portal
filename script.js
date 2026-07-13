@@ -554,7 +554,7 @@ let firebaseAuth = null;
 
 if (isFirebaseConfigured()) {
     firebase.initializeApp(firebaseConfig);
-    firestoreDb = firebase.app().firestore('default');
+    firestoreDb = firebase.firestore();
     firebaseAuth = firebase.auth();
 } else {
     console.warn('Firebase is not configured. Copy firebase-config.example.js to firebase-config.js and add your project settings.');
