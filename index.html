@@ -85,15 +85,18 @@
                 <svg class="login-frame" viewBox="0 0 620 260" preserveAspectRatio="none" aria-hidden="true">
                     <path class="frame-snake frame-snake-top" d="M0 90 V0 H620 V260 H0 V90" />
                     <path class="frame-snake frame-snake-bottom" d="M410 260 H620 V0 H0 V260 H410" />
-                    <path class="frame-tick" d="M30 0 V7 M60 0 V7 M90 0 V7 M120 0 V7 M150 0 V7 M180 0 V7 M0 30 H7 M0 60 H7" />
-                    <path class="frame-tick" d="M440 260 V253 M470 260 V253 M500 260 V253 M530 260 V253 M560 260 V253 M590 260 V253 M620 200 H613 M620 230 H613" />
+                    <path class="frame-tick"
+                        d="M30 0 V7 M60 0 V7 M90 0 V7 M120 0 V7 M150 0 V7 M180 0 V7 M0 30 H7 M0 60 H7" />
+                    <path class="frame-tick"
+                        d="M440 260 V253 M470 260 V253 M500 260 V253 M530 260 V253 M560 260 V253 M590 260 V253 M620 200 H613 M620 230 H613" />
                 </svg>
                 <h2 id="student-login-title"><span class="read-aloud" data-speech="Login">Login..</span></h2>
                 <p id="login-error" class="login-message login-error" hidden></p>
                 <div id="login-form-fields">
                     <div class="login-fields">
                         <input type="text" name="studentId" placeholder="StudentID" autocomplete="username" required>
-                        <input type="password" name="password" placeholder="Password" autocomplete="current-password" required>
+                        <input type="password" name="password" placeholder="Password" autocomplete="current-password"
+                            required>
                     </div>
                     <button type="submit" class="submit-btn" id="login-submit-btn">Verify</button>
                 </div>
@@ -164,7 +167,7 @@
             <div id="modal-content">
                 <button id="close-modal-btn">&times;</button>
                 <h3>Book a Session</h3>
-                <p class="owner-email">reachoutbanjara@gmail.com</p>
+                <p class="owner-email">learnmathswithkj@gmail.com</p>
 
                 <form id="booking-form"
                     action="https://script.google.com/macros/s/AKfycbzQJyC42OlkJooZykVDIpIMdFoFBS0CMASnQojiAcQX4D3CGn9anfgrNmOKB2USaqdz/exec"
@@ -186,14 +189,14 @@
                 <div id="calendar-modal-day-name" class="modal-day-name">Tuesday</div>
                 <h3 id="calendar-modal-date-title" class="modal-date-title">July 14, 2026</h3>
             </div>
-            
+
             <div id="calendar-modal-events-list" class="modal-events-list">
                 <!-- Dynamic events list -->
             </div>
-            
+
             <div class="add-task-section">
                 <button id="show-add-task-btn" class="add-task-toggle-btn" type="button">+ Add Note / Task</button>
-                
+
                 <form id="add-task-form" class="add-task-form" style="display: none;">
                     <input type="text" id="task-title" placeholder="Title" required autocomplete="off">
                     <div class="form-row">
